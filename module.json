@@ -1,8 +1,9 @@
 {
-    "name": "N8nChat",
+    "name": "n8n Chat",
     "alias": "n8nchat",
     "description": "Embed an n8n AI chat assistant with automatic FreeScout ticket context.",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "img": "/modules/n8nchat/img/icon.png",
     "detailsUrl": "https://github.com/automaze-me/freescout-n8nchat",
     "author": "Jörn Bungartz - automaze.me",
     "authorUrl": "https://automaze.me",
