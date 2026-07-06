@@ -1,7 +1,7 @@
 {
     "name": "N8nChat",
     "alias": "n8nchat",
-    "description": "",
+    "description": "Embed an n8n AI chat assistant with automatic FreeScout ticket context.",
     "version": "1.0.0",
     "detailsUrl": "",
     "author": "",
