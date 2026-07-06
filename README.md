@@ -62,4 +62,23 @@ The vendored widget bundle contains no `eval`/`new Function`, so it runs without
 
 The `@n8n/chat` build is vendored in `Public/js/chat.bundle.es.js` + `Public/css/style.css`
 (pinned in `Public/VERSION`). To update, re-download those two files from
-`https://cdn.jsdelivr.net/npm/@n8n/chat@<version>/dist/` and bump `VERSION`.
+`https://cdn.jsdelivr.net/npm/@n8n/chat@<version>/dist/` and bump `VERSION`. Keep the
+license sidecar `Public/js/chat.bundle.es.js.LICENSE` in sync with the new version.
+
+## License
+
+This module's own code is **AGPL-3.0** (see `module.json`), matching FreeScout core.
+
+It **bundles** the `@n8n/chat` widget (`Public/js/chat.bundle.es.js`, `Public/css/style.css`,
+v1.27.2, vendored unmodified), which is **© n8n GmbH under the n8n Sustainable Use License
+v1.0** — a *fair-code*, **non-OSI** license. Full text: `Public/js/chat.bundle.es.js.LICENSE`;
+summary in `NOTICE`. In short:
+
+- Free to **use and distribute this module free of charge**; running it for your own help
+  desk is permitted ("internal business purposes").
+- **Do not sell it** or offer it/the widget to third parties **as a hosted service** without
+  a separate commercial license from n8n.
+- The n8n copyright/license notices in the vendored files must be retained.
+
+To avoid redistributing n8n's code entirely, load `@n8n/chat` from its CDN instead of
+vendoring (swap the `Public/js` bundle for a CDN import in `loader.js`).

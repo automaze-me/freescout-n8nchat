@@ -1,0 +1,27 @@
+N8nChat — NOTICE
+================
+
+The N8nChat module's own source code (PHP, Blade templates, Public/js/loader.js,
+configuration) is licensed under the GNU Affero General Public License v3.0
+(AGPL-3.0), matching FreeScout core. See the "license" field in module.json.
+
+This module BUNDLES a third-party component:
+
+  @n8n/chat   —   Public/js/chat.bundle.es.js , Public/css/style.css
+  Version:        1.27.2 (see Public/VERSION)
+  Copyright:      (c) n8n GmbH
+  License:        n8n Sustainable Use License v1.0  ("fair-code", NOT OSI open source)
+  Full text:      Public/js/chat.bundle.es.js.LICENSE
+  Source:         https://www.npmjs.com/package/@n8n/chat  (vendored unmodified)
+
+What the n8n Sustainable Use License means for this module:
+
+  - You MAY use and distribute this module free of charge. Running it for your own
+    help desk is "internal business purposes" and is permitted.
+  - You may NOT sell this module, or offer it (or the bundled widget) to third
+    parties as a hosted/managed service, without a separate commercial license
+    from n8n.
+  - Do not remove or alter the n8n copyright/license notices in the vendored files.
+
+Alternative: the widget can instead be loaded from the @n8n/chat CDN rather than
+vendored, which avoids redistributing n8n's code. See README.md.
