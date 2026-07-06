@@ -4,6 +4,11 @@ Embeds the [@n8n/chat](https://www.npmjs.com/package/@n8n/chat) widget into the 
 agent UI. Every message carries FreeScout context (which ticket is open, the agent, the
 customer). Conversation memory is scoped per agent per ticket.
 
+> 💡 **Need help building your n8n AI assistant?**
+> [automaze.me](https://automaze.me) designs and implements n8n AI assistants and FreeScout
+> integrations — from first prototype to production. **Book a free 30-minute consultation →
+> [automaze.me/contact](https://automaze.me/contact)**
+
 ## Setup (FreeScout side)
 
 1. Modules → activate **N8nChat**.
