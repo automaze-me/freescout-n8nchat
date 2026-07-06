@@ -1,7 +1,7 @@
 # FreeScout ↔ n8n Chat module — design spec
 
 **Date:** 2026-07-05
-**Module:** `N8nChat` (alias `n8nchat`), repo `RhinoBag/freescout-n8nchat`
+**Module:** `N8nChat` (alias `n8nchat`), repo `automaze-me/freescout-n8nchat`
 **Status:** Approved design → ready for implementation plan
 
 ## 1. Goal
