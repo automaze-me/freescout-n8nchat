@@ -33,6 +33,7 @@ class N8nChatServiceProvider extends ServiceProvider
         $this->hooks();
         $this->registerSettings();
         $this->registerWidget();
+        $this->registerCsp();
     }
 
     /**
@@ -99,6 +100,29 @@ class N8nChatServiceProvider extends ServiceProvider
     public function registerWidget()
     {
         \Eventy::addAction('layout.body_bottom', [$this, 'renderWidget'], 20, 0);
+    }
+
+    /**
+     * Allow the widget to reach the configured n8n webhook host under FreeScout's CSP.
+     *
+     * FreeScout's CSP defines no explicit connect-src, so XHR/fetch fall back to
+     * default-src ('self'). The csp.script_src filter adds the webhook host to
+     * default-src (and script-src), widening the connect fallback to include the
+     * n8n origin without overriding the global connect policy.
+     */
+    public function registerCsp()
+    {
+        \Eventy::addFilter('csp.script_src', function ($sources) {
+            if (!\Option::get('n8nchat.enabled', config('n8nchat.options.enabled.default'))) {
+                return $sources;
+            }
+            $url = \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default'));
+            $parts = $url ? parse_url($url) : [];
+            if (!empty($parts['scheme']) && !empty($parts['host'])) {
+                $sources = trim($sources.' '.$parts['scheme'].'://'.$parts['host']);
+            }
+            return $sources;
+        }, 20, 1);
     }
 
     /**
