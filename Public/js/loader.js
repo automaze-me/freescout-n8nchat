@@ -7,7 +7,9 @@ import { createChat } from './chat.bundle.es.js';
             return;
         }
         // Force our per-agent+ticket session id (the widget reads this key on init).
-        localStorage.setItem('n8n-chat/sessionId', cfg.sessionId);
+        if (cfg.sessionId) {
+            localStorage.setItem('n8n-chat/sessionId', cfg.sessionId);
+        }
 
         createChat(Object.assign({
             webhookUrl: cfg.webhookUrl,
