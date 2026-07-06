@@ -46,6 +46,22 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ __('Streaming responses') }}</label>
+        <div class="col-sm-6">
+            <div class="controls">
+                <div class="onoffswitch-wrap">
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="settings[n8nchat.streaming]" value="1" id="n8nchat_streaming"
+                            class="onoffswitch-checkbox" @if (old('settings.n8nchat.streaming', $settings['n8nchat.streaming'])) checked @endif>
+                        <label class="onoffswitch-label" for="n8nchat_streaming"></label>
+                    </div>
+                </div>
+            </div>
+            <p class="help-block">{{ __('Enable if your n8n workflow streams the response (Chat Trigger / AI Agent streaming). Otherwise the raw stream chunks are shown as text.') }}</p>
+        </div>
+    </div>
+
     <h3 class="subheader">{{ __('Look & Feel') }}</h3>
 
     <div class="form-group">
@@ -53,6 +69,15 @@
         <div class="col-sm-6">
             <input type="text" class="form-control" name="settings[n8nchat.title]"
                 value="{{ old('settings.n8nchat.title', $settings['n8nchat.title']) }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ __('Subtitle') }}</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="settings[n8nchat.subtitle]"
+                value="{{ old('settings.n8nchat.subtitle', $settings['n8nchat.subtitle']) }}">
+            <p class="help-block">{{ __('Shown under the title in the chat window. Leave empty to use the n8n default.') }}</p>
         </div>
     </div>
 

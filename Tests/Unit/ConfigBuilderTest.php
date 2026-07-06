@@ -20,10 +20,30 @@ class ConfigBuilderTest extends TestCase
             'webhook_url'       => 'https://n8n.example.com/webhook/abc/chat',
             'shared_secret'     => '',
             'secret_header'     => 'X-Freescout-Secret',
+            'streaming'         => false,
             'title'             => '',
+            'subtitle'          => '',
             'greeting'          => '',
             'input_placeholder' => '',
         ], $overrides);
+    }
+
+    public function testSubtitleMapsToI18n(): void
+    {
+        $bare = ConfigBuilder::build($this->agent(), null, $this->settings());
+        $this->assertArrayNotHasKey('i18n', $bare['options']);
+
+        $c = ConfigBuilder::build($this->agent(), null, $this->settings(['subtitle' => 'Ask us anything']));
+        $this->assertSame('Ask us anything', $c['options']['i18n']['en']['subtitle']);
+    }
+
+    public function testStreamingOptionOnlyWhenEnabled(): void
+    {
+        $off = ConfigBuilder::build($this->agent(), null, $this->settings());
+        $this->assertArrayNotHasKey('enableStreaming', $off['options']);
+
+        $on = ConfigBuilder::build($this->agent(), null, $this->settings(['streaming' => true]));
+        $this->assertTrue($on['options']['enableStreaming']);
     }
 
     private function conversation(): array

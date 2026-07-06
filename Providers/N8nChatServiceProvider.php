@@ -70,7 +70,9 @@ class N8nChatServiceProvider extends ServiceProvider
                 'n8nchat.webhook_url'       => \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default')),
                 'n8nchat.shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
                 'n8nchat.secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+                'n8nchat.streaming'         => \Option::get('n8nchat.streaming', config('n8nchat.options.streaming.default')),
                 'n8nchat.title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
+                'n8nchat.subtitle'          => \Option::get('n8nchat.subtitle', config('n8nchat.options.subtitle.default')),
                 'n8nchat.greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
                 'n8nchat.input_placeholder' => \Option::get('n8nchat.input_placeholder', config('n8nchat.options.input_placeholder.default')),
             ];
@@ -145,7 +147,9 @@ class N8nChatServiceProvider extends ServiceProvider
             'webhook_url'       => $webhook_url,
             'shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
             'secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+            'streaming'         => \Option::get('n8nchat.streaming', config('n8nchat.options.streaming.default')),
             'title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
+            'subtitle'          => \Option::get('n8nchat.subtitle', config('n8nchat.options.subtitle.default')),
             'greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
             'input_placeholder' => \Option::get('n8nchat.input_placeholder', config('n8nchat.options.input_placeholder.default')),
         ];

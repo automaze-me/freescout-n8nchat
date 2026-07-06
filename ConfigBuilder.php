@@ -28,17 +28,23 @@ class ConfigBuilder
             'loadPreviousSession' => true,
             'chatSessionKey'      => 'sessionId',
         ];
+        if (!empty($settings['streaming'])) {
+            $options['enableStreaming'] = true;
+        }
         if (!empty($settings['greeting'])) {
             $options['initialMessages'] = [$settings['greeting']];
         }
-        if (!empty($settings['title']) || !empty($settings['input_placeholder'])) {
-            $en = [];
-            if (!empty($settings['title'])) {
-                $en['title'] = $settings['title'];
-            }
-            if (!empty($settings['input_placeholder'])) {
-                $en['inputPlaceholder'] = $settings['input_placeholder'];
-            }
+        $en = [];
+        if (!empty($settings['title'])) {
+            $en['title'] = $settings['title'];
+        }
+        if (!empty($settings['subtitle'])) {
+            $en['subtitle'] = $settings['subtitle'];
+        }
+        if (!empty($settings['input_placeholder'])) {
+            $en['inputPlaceholder'] = $settings['input_placeholder'];
+        }
+        if ($en) {
             $options['i18n'] = ['en' => $en];
         }
 
