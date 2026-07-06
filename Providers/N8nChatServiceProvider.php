@@ -5,6 +5,10 @@ namespace Modules\N8nChat\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
+if (!defined('N8NCHAT_MODULE')) {
+    define('N8NCHAT_MODULE', 'n8nchat');
+}
+
 class N8nChatServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +30,7 @@ class N8nChatServiceProvider extends ServiceProvider
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->hooks();
+        $this->registerSettings();
     }
 
     /**
@@ -33,7 +38,51 @@ class N8nChatServiceProvider extends ServiceProvider
      */
     public function hooks()
     {
-        
+
+    }
+
+    /**
+     * Register settings section and Eventy filters.
+     */
+    public function registerSettings()
+    {
+        // Add the section to Manage → Settings.
+        \Eventy::addFilter('settings.sections', function ($sections) {
+            $sections['n8nchat'] = ['title' => __('n8n Chat'), 'icon' => 'comment', 'order' => 650];
+            return $sections;
+        }, 20, 1);
+
+        // Render our view for the section.
+        \Eventy::addFilter('settings.view', function ($view, $section) {
+            return $section === 'n8nchat' ? 'n8nchat::settings' : $view;
+        }, 20, 2);
+
+        // Provide the option values (and defaults) for the section.
+        \Eventy::addFilter('settings.section_settings', function ($settings, $section) {
+            if ($section !== 'n8nchat') {
+                return $settings;
+            }
+            return [
+                'n8nchat.enabled'           => \Option::get('n8nchat.enabled', config('n8nchat.options.enabled.default')),
+                'n8nchat.webhook_url'       => \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default')),
+                'n8nchat.shared_secret'     => \Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default')),
+                'n8nchat.secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+                'n8nchat.title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
+                'n8nchat.greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
+                'n8nchat.input_placeholder' => \Option::get('n8nchat.input_placeholder', config('n8nchat.options.input_placeholder.default')),
+            ];
+        }, 20, 2);
+
+        // Validation: webhook_url must be a URL when provided.
+        \Eventy::addFilter('settings.section_params', function ($params, $section) {
+            if ($section !== 'n8nchat') {
+                return $params;
+            }
+            $params['validator_rules'] = [
+                'settings.n8nchat\\.webhook_url' => 'nullable|url',
+            ];
+            return $params;
+        }, 20, 2);
     }
 
     /**
