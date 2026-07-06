@@ -27,8 +27,8 @@
 <div class="form-group">
     <label class="col-sm-2 control-label">{{ __('Shared Secret') }}</label>
     <div class="col-sm-6">
-        <input type="text" class="form-control" name="settings[n8nchat.shared_secret]"
-            value="{{ old('settings.n8nchat.shared_secret', $settings['n8nchat.shared_secret']) }}">
+        <input type="password" class="form-control" name="settings[n8nchat.shared_secret]"
+            value="{{ old('settings.n8nchat.shared_secret', \Helper::safePassword($settings['n8nchat.shared_secret'])) }}" autocomplete="new-password">
         <p class="help-block">{{ __('Optional. Sent as an HTTP header so your workflow can verify requests. Visible to logged-in agents (client-side).') }}</p>
     </div>
 </div>

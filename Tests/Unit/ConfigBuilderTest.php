@@ -54,6 +54,7 @@ class ConfigBuilderTest extends TestCase
         $this->assertSame('https://n8n.example.com/webhook/abc/chat', $c['webhookUrl']);
         $this->assertSame('window', $c['options']['mode']);
         $this->assertTrue($c['options']['loadPreviousSession']);
+        $this->assertSame('sessionId', $c['options']['chatSessionKey']);
     }
 
     public function testNoHeadersWhenSecretEmpty(): void
@@ -82,6 +83,14 @@ class ConfigBuilderTest extends TestCase
     {
         $c = ConfigBuilder::build($this->agent(), null, $this->settings());
         $this->assertArrayNotHasKey('conversation', $c['metadata']);
+    }
+
+    public function testDefaultSecretHeaderWhenHeaderEmptyButSecretSet(): void
+    {
+        $c = ConfigBuilder::build($this->agent(), null, $this->settings([
+            'shared_secret' => 's3cret', 'secret_header' => '',
+        ]));
+        $this->assertSame(['X-Freescout-Secret' => 's3cret'], $c['headers']);
     }
 
     public function testBrandingOptionsOnlyWhenProvided(): void

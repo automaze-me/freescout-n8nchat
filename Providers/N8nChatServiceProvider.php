@@ -67,7 +67,7 @@ class N8nChatServiceProvider extends ServiceProvider
             return [
                 'n8nchat.enabled'           => \Option::get('n8nchat.enabled', config('n8nchat.options.enabled.default')),
                 'n8nchat.webhook_url'       => \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default')),
-                'n8nchat.shared_secret'     => \Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default')),
+                'n8nchat.shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
                 'n8nchat.secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
                 'n8nchat.title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
                 'n8nchat.greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
@@ -82,6 +82,12 @@ class N8nChatServiceProvider extends ServiceProvider
             }
             $params['validator_rules'] = [
                 'settings.n8nchat\\.webhook_url' => 'nullable|url',
+            ];
+            $params['settings'] = [
+                'n8nchat.shared_secret' => [
+                    'safe_password' => true,
+                    'encrypt'       => true,
+                ],
             ];
             return $params;
         }, 20, 2);
@@ -113,7 +119,7 @@ class N8nChatServiceProvider extends ServiceProvider
 
         $settings = [
             'webhook_url'       => $webhook_url,
-            'shared_secret'     => \Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default')),
+            'shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
             'secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
             'title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
             'greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
