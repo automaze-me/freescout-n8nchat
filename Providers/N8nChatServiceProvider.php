@@ -4,6 +4,7 @@ namespace Modules\N8nChat\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\N8nChat\ConfigBuilder;
 
 if (!defined('N8NCHAT_MODULE')) {
     define('N8NCHAT_MODULE', 'n8nchat');
@@ -31,6 +32,7 @@ class N8nChatServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->hooks();
         $this->registerSettings();
+        $this->registerWidget();
     }
 
     /**
@@ -83,6 +85,74 @@ class N8nChatServiceProvider extends ServiceProvider
             ];
             return $params;
         }, 20, 2);
+    }
+
+    /**
+     * Register the widget hook.
+     */
+    public function registerWidget()
+    {
+        \Eventy::addAction('layout.body_bottom', [$this, 'renderWidget'], 20, 0);
+    }
+
+    /**
+     * Render the chat widget at the bottom of every authenticated page.
+     */
+    public function renderWidget()
+    {
+        if (!\Auth::check()) {
+            return;
+        }
+        if (!\Option::get('n8nchat.enabled', config('n8nchat.options.enabled.default'))) {
+            return;
+        }
+        $webhook_url = \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default'));
+        if (empty($webhook_url)) {
+            return;
+        }
+
+        $settings = [
+            'webhook_url'       => $webhook_url,
+            'shared_secret'     => \Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default')),
+            'secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+            'title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
+            'greeting'          => \Option::get('n8nchat.greeting', config('n8nchat.options.greeting.default')),
+            'input_placeholder' => \Option::get('n8nchat.input_placeholder', config('n8nchat.options.input_placeholder.default')),
+        ];
+
+        $user = \Auth::user();
+        $agent = [
+            'id'    => $user->id,
+            'name'  => $user->getFullName(),
+            'email' => $user->email,
+            'role'  => $user->isAdmin() ? 'admin' : 'user',
+        ];
+
+        $conversation = null;
+        if (\Route::currentRouteName() === 'conversations.view') {
+            $conv = \App\Conversation::find(request()->route('id'));
+            if ($conv && $user->can('viewCached', $conv)) {
+                $conversation = [
+                    'id'       => $conv->id,
+                    'number'   => $conv->number,
+                    'subject'  => $conv->subject,
+                    'status'   => $conv->getStatusName(),
+                    'mailbox'  => ['id' => $conv->mailbox_id, 'name' => optional($conv->mailbox)->name],
+                    'customer' => [
+                        'name'  => $conv->customer ? $conv->customer->getFullName(true) : '',
+                        'email' => $conv->customer_email,
+                    ],
+                    'assignee' => optional($conv->user)->getFullName(),
+                ];
+            }
+        }
+
+        $config = ConfigBuilder::build($agent, $conversation, $settings);
+
+        echo view('n8nchat::widget', [
+            'config'        => $config,
+            'module_public' => \Module::getPublicPath(N8NCHAT_MODULE),
+        ])->render();
     }
 
     /**
