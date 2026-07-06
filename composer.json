@@ -1,0 +1,25 @@
+{
+    "name": "freescout/n8nchat",
+    "description": "",
+    "authors": [
+        {
+            "name": "FreeScout",
+            "email": "support@freescout.net"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\N8nChat\\Providers\\N8nChatServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\N8nChat\\": ""
+        }
+    }
+}
