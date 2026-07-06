@@ -18,8 +18,8 @@ class ConfigBuilderTest extends TestCase
     {
         return array_merge([
             'webhook_url'       => 'https://n8n.example.com/webhook/abc/chat',
-            'shared_secret'     => '',
-            'secret_header'     => 'X-Freescout-Secret',
+            'auth_username'     => '',
+            'auth_password'     => '',
             'streaming'         => false,
             'title'             => '',
             'subtitle'          => '',
@@ -77,18 +77,25 @@ class ConfigBuilderTest extends TestCase
         $this->assertSame('sessionId', $c['options']['chatSessionKey']);
     }
 
-    public function testNoHeadersWhenSecretEmpty(): void
+    public function testNoHeadersWhenNoUsername(): void
     {
         $c = ConfigBuilder::build($this->agent(), null, $this->settings());
         $this->assertSame([], $c['headers']);
+
+        // Password without a username sends nothing.
+        $c = ConfigBuilder::build($this->agent(), null, $this->settings(['auth_password' => 'p']));
+        $this->assertSame([], $c['headers']);
     }
 
-    public function testSecretHeaderWhenSecretSet(): void
+    public function testBasicAuthHeaderWhenCredentialsSet(): void
     {
         $c = ConfigBuilder::build($this->agent(), null, $this->settings([
-            'shared_secret' => 's3cret', 'secret_header' => 'X-My-Header',
+            'auth_username' => 'agent', 'auth_password' => 's3cret',
         ]));
-        $this->assertSame(['X-My-Header' => 's3cret'], $c['headers']);
+        $this->assertSame(
+            ['Authorization' => 'Basic '.base64_encode('agent:s3cret')],
+            $c['headers']
+        );
     }
 
     public function testMetadataContainsAgentAndConversation(): void
@@ -105,12 +112,15 @@ class ConfigBuilderTest extends TestCase
         $this->assertArrayNotHasKey('conversation', $c['metadata']);
     }
 
-    public function testDefaultSecretHeaderWhenHeaderEmptyButSecretSet(): void
+    public function testBasicAuthAllowsEmptyPassword(): void
     {
         $c = ConfigBuilder::build($this->agent(), null, $this->settings([
-            'shared_secret' => 's3cret', 'secret_header' => '',
+            'auth_username' => 'agent',
         ]));
-        $this->assertSame(['X-Freescout-Secret' => 's3cret'], $c['headers']);
+        $this->assertSame(
+            ['Authorization' => 'Basic '.base64_encode('agent:')],
+            $c['headers']
+        );
     }
 
     public function testBrandingOptionsOnlyWhenProvided(): void

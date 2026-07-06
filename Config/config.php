@@ -7,8 +7,8 @@ return [
     'options' => [
         'enabled'           => ['default' => false],
         'webhook_url'       => ['default' => ''],
-        'shared_secret'     => ['default' => ''],
-        'secret_header'     => ['default' => 'X-Freescout-Secret'],
+        'auth_username'     => ['default' => ''],
+        'auth_password'     => ['default' => ''],
         'streaming'         => ['default' => false],
         'title'             => ['default' => ''],
         'subtitle'          => ['default' => ''],

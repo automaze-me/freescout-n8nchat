@@ -10,15 +10,17 @@ customer). Conversation memory is scoped per agent per ticket.
 2. Manage → Settings → **n8n Chat**:
    - **Enabled**: on
    - **Webhook URL**: your n8n Chat Trigger *production* URL (ends in `/chat`)
-   - **Shared Secret** (optional): a token your workflow checks
-   - Optional: window title, greeting, input placeholder
+   - **Auth Username / Auth Password** (optional): HTTP Basic Auth credentials, sent as an
+     `Authorization: Basic …` header. Must match the Chat Trigger's Basic Auth setting.
+   - Optional: streaming, window title, subtitle, greeting, input placeholder
 
 ## Setup (n8n side)
 
 1. Add a **Chat Trigger** node. In its options, set **Allowed Origins (CORS)** to your
    FreeScout domain.
-2. If using a shared secret, read the configured header (default `X-Freescout-Secret`)
-   in the workflow and reject mismatches.
+2. To require authentication, set the Chat Trigger's **Authentication** to **Basic Auth**
+   and use the same username/password you entered in FreeScout (the widget sends them as an
+   `Authorization: Basic` header). n8n's Chat node only supports Basic Auth.
 3. Wire the trigger into an **AI Agent** node with a **memory** node keyed on the
    incoming `sessionId` (format `fs-user-<uid>-conv-<cid>` or `fs-user-<uid>-general`).
 4. To use ticket context, read `metadata.conversation` from the trigger payload. For the
@@ -44,8 +46,9 @@ customer). Conversation memory is scoped per agent per ticket.
 
 ## Security note
 
-The shared secret is rendered client-side (agents are trusted users). It is a gate against
-anonymous internet abuse of the webhook, **not** a secret from agents. Always use HTTPS.
+The Basic Auth credentials are rendered client-side (agents are trusted users). They gate
+against anonymous internet abuse of the webhook, but are **not** a secret from agents. The
+password is encrypted at rest and masked in the form. Always use HTTPS.
 
 ## Content-Security-Policy
 

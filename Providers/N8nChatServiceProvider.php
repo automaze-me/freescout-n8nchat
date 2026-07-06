@@ -68,8 +68,8 @@ class N8nChatServiceProvider extends ServiceProvider
             return [
                 'n8nchat.enabled'           => \Option::get('n8nchat.enabled', config('n8nchat.options.enabled.default')),
                 'n8nchat.webhook_url'       => \Option::get('n8nchat.webhook_url', config('n8nchat.options.webhook_url.default')),
-                'n8nchat.shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
-                'n8nchat.secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+                'n8nchat.auth_username'     => \Option::get('n8nchat.auth_username', config('n8nchat.options.auth_username.default')),
+                'n8nchat.auth_password'     => \Helper::decrypt(\Option::get('n8nchat.auth_password', config('n8nchat.options.auth_password.default'))),
                 'n8nchat.streaming'         => \Option::get('n8nchat.streaming', config('n8nchat.options.streaming.default')),
                 'n8nchat.title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
                 'n8nchat.subtitle'          => \Option::get('n8nchat.subtitle', config('n8nchat.options.subtitle.default')),
@@ -87,7 +87,7 @@ class N8nChatServiceProvider extends ServiceProvider
                 'settings.n8nchat\\.webhook_url' => 'nullable|url',
             ];
             $params['settings'] = [
-                'n8nchat.shared_secret' => [
+                'n8nchat.auth_password' => [
                     'safe_password' => true,
                     'encrypt'       => true,
                 ],
@@ -145,8 +145,8 @@ class N8nChatServiceProvider extends ServiceProvider
 
         $settings = [
             'webhook_url'       => $webhook_url,
-            'shared_secret'     => \Helper::decrypt(\Option::get('n8nchat.shared_secret', config('n8nchat.options.shared_secret.default'))),
-            'secret_header'     => \Option::get('n8nchat.secret_header', config('n8nchat.options.secret_header.default')),
+            'auth_username'     => \Option::get('n8nchat.auth_username', config('n8nchat.options.auth_username.default')),
+            'auth_password'     => \Helper::decrypt(\Option::get('n8nchat.auth_password', config('n8nchat.options.auth_password.default'))),
             'streaming'         => \Option::get('n8nchat.streaming', config('n8nchat.options.streaming.default')),
             'title'             => \Option::get('n8nchat.title', config('n8nchat.options.title.default')),
             'subtitle'          => \Option::get('n8nchat.subtitle', config('n8nchat.options.subtitle.default')),

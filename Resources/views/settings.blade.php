@@ -30,19 +30,20 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{ __('Shared Secret') }}</label>
+        <label class="col-sm-2 control-label">{{ __('Auth Username') }}</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" name="settings[n8nchat.shared_secret]"
-                value="{{ old('settings.n8nchat.shared_secret', \Helper::safePassword($settings['n8nchat.shared_secret'])) }}" autocomplete="new-password">
-            <p class="help-block">{{ __('Optional. Sent as an HTTP header so your workflow can verify requests. Visible to logged-in agents (client-side).') }}</p>
+            <input type="text" class="form-control" name="settings[n8nchat.auth_username]"
+                value="{{ old('settings.n8nchat.auth_username', $settings['n8nchat.auth_username']) }}" autocomplete="off">
+            <p class="help-block">{{ __('Optional. Enables HTTP Basic Auth on requests to n8n. Set the same user/password in your n8n Chat Trigger node (Authentication: Basic Auth). Leave empty for no auth.') }}</p>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{ __('Secret Header Name') }}</label>
+        <label class="col-sm-2 control-label">{{ __('Auth Password') }}</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="settings[n8nchat.secret_header]"
-                value="{{ old('settings.n8nchat.secret_header', $settings['n8nchat.secret_header']) }}">
+            <input type="password" class="form-control" name="settings[n8nchat.auth_password]"
+                value="{{ old('settings.n8nchat.auth_password', \Helper::safePassword($settings['n8nchat.auth_password'])) }}" autocomplete="new-password">
+            <p class="help-block">{{ __('Sent as an Authorization: Basic header (base64 of user:password). Visible to logged-in agents client-side; always use HTTPS.') }}</p>
         </div>
     </div>
 

@@ -13,9 +13,10 @@ class ConfigBuilder
             ($conversation ? 'conv-'.$conversation['id'] : 'general');
 
         $headers = [];
-        if (!empty($settings['shared_secret'])) {
-            $header_name = $settings['secret_header'] ?: 'X-Freescout-Secret';
-            $headers[$header_name] = $settings['shared_secret'];
+        if (!empty($settings['auth_username'])) {
+            $headers['Authorization'] = 'Basic '.base64_encode(
+                $settings['auth_username'].':'.($settings['auth_password'] ?? '')
+            );
         }
 
         $metadata = ['agent' => $agent];
