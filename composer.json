@@ -1,10 +1,11 @@
 {
     "name": "rhinobag/freescout-n8nchat",
-    "description": "",
+    "description": "Embed an n8n AI chat assistant with automatic FreeScout ticket context.",
     "authors": [
         {
-            "name": "RhinoBag",
-            "email": "support@freescout.net"
+            "name": "Jörn Bungartz",
+            "email": "hello@automaze.me",
+            "homepage": "https://automaze.me"
         }
     ],
     "extra": {
