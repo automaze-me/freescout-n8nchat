@@ -47,6 +47,17 @@ customer). Conversation memory is scoped per agent per ticket.
 The shared secret is rendered client-side (agents are trusted users). It is a gate against
 anonymous internet abuse of the webhook, **not** a secret from agents. Always use HTTPS.
 
+## Content-Security-Policy
+
+FreeScout serves a strict CSP (`script-src 'self' 'nonce-…'`, no explicit `connect-src`).
+The module handles this automatically — no admin action needed:
+
+- the injected config `<script>` carries FreeScout's per-request nonce (`\Helper::cspNonceAttr()`);
+- a `csp.script_src` filter adds the configured webhook host to `default-src`, which the
+  widget's `connect-src` falls back to, so the widget can POST to your n8n instance.
+
+The vendored widget bundle contains no `eval`/`new Function`, so it runs without `unsafe-eval`.
+
 ## Updating the widget bundle
 
 The `@n8n/chat` build is vendored in `Public/js/chat.bundle.es.js` + `Public/css/style.css`
