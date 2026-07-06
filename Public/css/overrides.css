@@ -1,0 +1,40 @@
+/* N8nChat module — local overrides for the vendored @n8n/chat widget.
+ * Loaded AFTER the vendored style.css. Scoped to the chat message content
+ * (.chat-message-markdown) so it never touches FreeScout's UI or the widget chrome.
+ */
+
+/* Text size: the widget's message font is 1rem, but FreeScout's Bootstrap root
+ * font-size is ~10px, so the widget text renders much smaller than the FreeScout
+ * UI. Bump message + input text to ~14px to match. */
+.n8n-chat {
+    --chat--message--font-size: 14px;
+    --chat--input--font-size: 14px;
+}
+.n8n-chat .chat-message-markdown {
+    font-size: 14px;
+}
+
+/* Fix: markdown bullet/numbered lists render with clear, consistent indentation
+ * (the vendored theme's list spacing can come out too small / flattened). */
+.n8n-chat .chat-message-markdown ul,
+.n8n-chat .chat-message-markdown ol {
+    padding-left: 1.5em;
+    margin: 0.4em 0;
+}
+
+.n8n-chat .chat-message-markdown ul { list-style: disc outside; }
+.n8n-chat .chat-message-markdown ol { list-style: decimal outside; }
+.n8n-chat .chat-message-markdown ul ul { list-style: circle outside; }
+.n8n-chat .chat-message-markdown ul ul ul { list-style: square outside; }
+
+.n8n-chat .chat-message-markdown li {
+    margin: 0.15em 0;
+    padding-left: 0.25em;
+}
+
+/* Nested lists: keep indenting each level. */
+.n8n-chat .chat-message-markdown li > ul,
+.n8n-chat .chat-message-markdown li > ol {
+    padding-left: 1.25em;
+    margin: 0.2em 0;
+}
