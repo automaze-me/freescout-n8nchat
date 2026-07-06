@@ -8,7 +8,7 @@
     "authorUrl": "https://automaze.me",
     "requiredAppVersion": "1.8.229",
     "latestVersionUrl": "https://raw.githubusercontent.com/automaze-me/freescout-n8nchat/refs/heads/main/module.json",
-    "latestVersionZipUrl": "https://github.com/automaze-me/freescout-n8nchat/archive/refs/heads/main.zip",
+    "latestVersionZipUrl": "https://github.com/automaze-me/freescout-n8nchat/releases/latest/download/N8nChat.zip",
     "license": "AGPL-3.0",
     "keywords": ["chat", "n8n", "ai", "assistant", "livechat"],
     "active": 0,

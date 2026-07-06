@@ -9,6 +9,17 @@ customer). Conversation memory is scoped per agent per ticket.
 > integrations — from first prototype to production. **Book a free 30-minute consultation →
 > [automaze.me/contact](https://automaze.me/contact)**
 
+## Install
+
+1. Download `N8nChat.zip` from the
+   [latest release](https://github.com/automaze-me/freescout-n8nchat/releases/latest).
+2. Extract it into your FreeScout `Modules/` directory, so you end up with `Modules/N8nChat/`.
+3. In FreeScout, go to **Manage → Modules** and **Activate** "N8nChat".
+   If assets don't load, clear the cache: `php artisan freescout:clear-cache`.
+
+Once installed, FreeScout can update it in place (the module ships `latestVersionUrl` /
+`latestVersionZipUrl`).
+
 ## Setup (FreeScout side)
 
 1. Modules → activate **N8nChat**.
