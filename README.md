@@ -9,6 +9,16 @@ customer). Conversation memory is scoped per agent per ticket.
 > integrations — from first prototype to production. **Book a free 30-minute consultation →
 > [automaze.me/contact](https://automaze.me/contact)**
 
+## Screenshots
+
+The AI assistant, open inside a ticket with full conversation context:
+
+![n8n AI chat assistant inside a FreeScout conversation](docs/screenshot-chat.png)
+
+Settings — connect your n8n webhook and customise the chat window:
+
+![N8nChat module settings in FreeScout](docs/screenshot-settings.png)
+
 ## Install
 
 1. Download `N8nChat.zip` from the
