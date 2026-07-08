@@ -53,11 +53,11 @@ Once installed, FreeScout can update it in place (the module ships `latestVersio
    full thread, call the FreeScout API using `metadata.conversation.id`.
 
 > 🧩 **Tip:** the
-> [`@automaze.me/n8n-nodes-freescout`](https://www.npmjs.com/package/@automaze.me/n8n-nodes-freescout)
+> [`n8n-nodes-freescout`](https://www.npmjs.com/package/n8n-nodes-freescout)
 > community node package gives you native n8n nodes for the FreeScout API (a **Freescout**
 > action node and a **FreescoutTrigger** node) — so you can read threads, create/update
 > conversations, and more without hand-crafting HTTP requests. Install it in n8n via
-> **Settings → Community Nodes → Install** with the package name `@automaze.me/n8n-nodes-freescout`.
+> **Settings → Community Nodes → Install** with the package name `n8n-nodes-freescout`.
 
 ### Payload shape
 
